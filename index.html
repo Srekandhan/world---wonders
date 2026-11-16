@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071629">
+<title>World Wonders Explorer</title>
+<style>
+:root{--navy:#071629;--navy2:#102943;--gold:#d8b56d;--cream:#f5f0e6;--muted:#b9c4d1}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(rgba(7,22,41,.94),rgba(7,22,41,.97)),url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=80') center/cover fixed;color:var(--cream);font-family:Georgia,'Times New Roman',serif}
+header{min-height:78vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px;background:linear-gradient(90deg,rgba(4,15,29,.86),rgba(4,15,29,.38)),url('https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=2000&q=85') center/cover}
+.kicker{color:var(--gold);letter-spacing:.28em;text-transform:uppercase;font:600 12px Arial,sans-serif}
+h1{font-size:clamp(42px,8vw,86px);line-height:.98;margin:18px 0;color:#fff;text-shadow:0 4px 25px #000}
+header p{max-width:650px;margin:20px auto;color:#e4e8ed;font:17px/1.7 Arial,sans-serif}
+.btn{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:13px 22px;text-decoration:none;text-transform:uppercase;letter-spacing:.12em;font:12px Arial,sans-serif;background:transparent;cursor:pointer}
+.btn:hover{background:var(--gold);color:var(--navy)}
+section{padding:72px max(20px,6vw);background:linear-gradient(rgba(7,22,41,.88),rgba(7,22,41,.94)),url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=80') center/cover fixed}.section-head{text-align:center;margin-bottom:34px}.section-head h2{font-size:clamp(30px,5vw,48px);margin:8px 0;color:#fff}.section-head p{font:15px/1.7 Arial,sans-serif;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;max-width:1200px;margin:auto}
+.card{background:linear-gradient(145deg,rgba(16,41,67,.96),rgba(7,22,41,.98));border:1px solid rgba(216,181,109,.25);overflow:hidden;transition:.25s;box-shadow:0 12px 30px rgba(0,0,0,.22)}.card:hover{transform:translateY(-5px);border-color:var(--gold)}
+.card img{width:100%;height:190px;object-fit:cover;display:block;filter:saturate(.92);transition:transform .45s}.card:hover img{transform:scale(1.045)}.card-body{padding:20px}.number{color:var(--gold);font:12px Arial,sans-serif;letter-spacing:.15em}.card h3{font-size:23px;margin:9px 0}.card p{color:var(--muted);font:14px/1.6 Arial,sans-serif;min-height:65px}
+.details{display:none;background:#0b2037;border-top:1px solid rgba(216,181,109,.3);padding:24px;margin-top:16px}.details.open{display:block}.details p,.details li{font:15px/1.75 Arial,sans-serif;color:#d5dde6}.details h4{color:var(--gold);font-size:20px;margin:16px 0 6px}.actions{display:flex;gap:10px;flex-wrap:wrap}
+footer{text-align:center;padding:35px 20px;background:#040d18;color:#9eacbc;font:13px Arial,sans-serif} .note{max-width:900px;margin:24px auto 0;color:#aebdca;font:12px/1.6 Arial,sans-serif;text-align:center}
+</style>
+</head>
+<body>
+<header>
+ <div><div class="kicker">A journey through human achievement</div>
+ <h1>WORLD<br>WONDERS</h1>
+ <p>Explore seven extraordinary landmarks, discover the stories behind them, and experience the history, architecture and cultures that make them unforgettable.</p>
+ <a class="btn" href="#wonders">Explore the wonders</a></div>
+</header>
+<section id="wonders">
+ <div class="section-head"><div class="kicker">The New Seven Wonders</div><h2>Choose a destination</h2><p>Select a wonder to reveal its story, key facts and a video search.</p></div>
+ <div class="grid" id="cards"></div>
+ <p class="note">These are the New Seven Wonders selected in the 2007 global poll. The list is distinct from the ancient Seven Wonders.</p>
+</section>
+<footer>WORLD WONDERS EXPLORER · Discover. Learn. Be inspired.</footer>
+<script>
+const wonders=[
+{name:"Taj Mahal",country:"Agra, India",year:"1632–1653",image:"https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=80",intro:"An ivory-white marble mausoleum commissioned by Mughal emperor Shah Jahan in memory of his wife Mumtaz Mahal.",history:"Construction began in 1632 and the main mausoleum was substantially completed in 1648; the wider complex was completed around 1653.",architecture:"The complex combines Persian, Islamic and Indian influences. Its central dome, four minarets, calligraphy and intricate stone inlay are defining features.",facts:["A UNESCO World Heritage Site since 1983.","Built beside the Yamuna River in Agra.","The marble can appear to change tone with the light." ]},
+{name:"Great Wall of China",country:"Northern China",year:"Built and rebuilt over many centuries",image:"https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=900&q=80",intro:"A vast network of fortifications built across northern China to defend territories and control borders.",history:"Different states built walls over centuries; major sections were connected and strengthened during the Qin and Ming dynasties.",architecture:"The wall includes walls, watchtowers, passes and defensive works adapted to mountains, deserts and plains.",facts:["It is a network of many sections, not one continuous wall.","Many of the best-known surviving sections date from the Ming dynasty.","It is a UNESCO World Heritage Site."]},
+{name:"Petra",country:"Ma'an Governorate, Jordan",year:"Flourished from around the 4th century BCE",image:"https://images.unsplash.com/photo-1579606032821-4e6161c81bd3?auto=format&fit=crop&w=900&q=80",intro:"An ancient Nabataean city famous for monumental buildings carved into rose-coloured rock.",history:"Petra grew as a trading centre of the Nabataean kingdom and later became part of the Roman Empire.",architecture:"Its rock-cut tombs and temples, including Al-Khazneh, show a blend of Nabataean, Hellenistic and other influences.",facts:["Often called the Rose City for the colour of its stone.","The Siq is a narrow gorge leading to the famous Treasury.","Petra is a UNESCO World Heritage Site."]},
+{name:"Christ the Redeemer",country:"Rio de Janeiro, Brazil",year:"Opened in 1931",image:"https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=900&q=80",intro:"A monumental statue of Jesus Christ standing atop Mount Corcovado and overlooking Rio de Janeiro.",history:"The statue was built between 1922 and 1931 and became an enduring symbol of the city and Brazil.",architecture:"Designed in the Art Deco style, it is made of reinforced concrete and clad in a mosaic of soapstone tiles.",facts:["The statue stands 30 metres tall, excluding its pedestal.","It overlooks Guanabara Bay and the city of Rio.","It was named one of the New Seven Wonders in 2007."]},
+{name:"Machu Picchu",country:"Cusco Region, Peru",year:"15th century",image:"https://images.unsplash.com/photo-1526392060635-9d6019884377?auto=format&fit=crop&w=900&q=80",intro:"An Inca citadel set high in the Andes Mountains, known for its spectacular setting and finely built stone structures.",history:"Most archaeologists believe it was built in the 15th century during the reign of the Inca ruler Pachacuti.",architecture:"Its terraces, plazas, temples and precisely fitted stonework were designed to work with the steep mountain landscape.",facts:["Located about 2,430 metres above sea level.","It is a UNESCO World Heritage Site.","It was brought to international attention in 1911 by Hiram Bingham."]},
+{name:"Chichen Itza",country:"Yucatán, Mexico",year:"Developed mainly between the 7th and 13th centuries",image:"https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=900&q=80",intro:"A major Maya city on the Yucatán Peninsula, celebrated for its monumental architecture and astronomical associations.",history:"Chichen Itza developed over several centuries and became one of the most influential centres in the Maya region.",architecture:"The site includes El Castillo, the Great Ball Court, the Temple of the Warriors and other ceremonial structures.",facts:["El Castillo is also known as the Temple of Kukulcán.","The site reflects Maya knowledge of mathematics and astronomy.","It is a UNESCO World Heritage Site."]},
+{name:"Colosseum",country:"Rome, Italy",year:"Opened around 80 CE",image:"https://images.unsplash.com/photo-1552432552-06c0b0a94dda?auto=format&fit=crop&w=900&q=80",intro:"The great oval amphitheatre of ancient Rome, built for public spectacles and events.",history:"Construction began under Emperor Vespasian around 72 CE and the Colosseum was inaugurated by his son Titus around 80 CE.",architecture:"Built mainly of stone and concrete, it had tiered seating, arches and a complex underground area known as the hypogeum.",facts:["It could accommodate tens of thousands of spectators.","It hosted gladiatorial contests and public spectacles.","It is part of the UNESCO-listed historic centre of Rome."]}
+];
+const cards=document.getElementById('cards');
+wonders.forEach((w,i)=>{
+ const el=document.createElement('article');el.className='card';
+ el.innerHTML=`<img src="${w.image}" alt="${w.name}" loading="lazy"><div class="card-body"><div class="number">WONDER 0${i+1}</div><h3>${w.name}</h3><p>${w.intro}</p><button class="btn" type="button" aria-expanded="false">Explore details</button><div class="details"><h4>History</h4><p>${w.history}</p><h4>Architecture</h4><p>${w.architecture}</p><h4>Quick facts</h4><ul>${w.facts.map(f=>`<li>${f}</li>`).join('')}</ul><h4>Location & date</h4><p>${w.country} · ${w.year}</p><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${encodeURIComponent(w.name+' documentary travel video')}">Watch a ${w.name} video</a></div></div></div>`;
+ const button=el.querySelector('button'),details=el.querySelector('.details');
+ button.addEventListener('click',()=>{const open=details.classList.toggle('open');button.textContent=open?'Hide details':'Explore details';button.setAttribute('aria-expanded',String(open));});
+ cards.appendChild(el);
+});
+</script>
+</body>
+</html>
